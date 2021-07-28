@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+
+  sql-server-db:
+    container_name: sql-server-db
+    image: percona/percona-server:8.0 
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+  app1:
+    build: ./app1
+    ports:
+    - "5001:5000"
+  app2:
+    build: ./app2
+    ports:
+    - "5002:5000"
+  nginx:
+    build: ./nginx
+    ports:
+    - "8080:80"
+    depends_on:
+    - app1
+    - app2
